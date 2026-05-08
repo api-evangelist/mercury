@@ -5,38 +5,184 @@ provider: Mercury
 providerId: mercury
 created: '2026-05-08'
 modified: '2026-05-08'
-reconciled: false
+reconciled: true
 tags:
-- Banking
-- Fintech
-- Startups
-- Treasury
-- Payments
-- Plans
-description: Placeholder plans/pricing artifact for Mercury. Replace with real published pricing once
-  the pipeline researches the provider's plans page.
-notes: Initial scaffold — plans/pricing have not yet been reconciled against the provider's documentation.
+  - Banking
+  - Fintech
+  - Startups
+  - Treasury
+  - Payments
+  - Plans
+description: >-
+  Mercury sells three product tiers - Mercury (free), Mercury Plus, and Mercury Pro. Tier
+  pricing is monthly, with annual billing offering a discount. The API itself is included
+  on every tier, but invoicing-API call volume and active-user counts for expense
+  reimbursements scale with the tier. Mass-payments-by-API and other higher-volume
+  workflows require a paid plan.
 sources:
-- https://mercury.com/
+  - https://mercury.com/pricing
+  - https://docs.mercury.com/
 plans:
-- id: mercury-default
-  name: To Be Reconciled
-  type: enterprise
-  description: Initial scaffold; replace with provider plan tiers (Free / Pro / Enterprise / pay-as-you-go,
-    etc.) once pricing is reconciled.
-  entries:
-  - label: API Access
-    name: api_access
-    type: flat
-    metric: varies
-    limit: -1
-    timeFrame: usage
-    geo: global
-    unit: 1
-    price: see https://mercury.com/
-    userMultiplied: false
-  elements:
-  - name: Pending Reconciliation
+  - id: mercury-free
+    name: Mercury (Free)
+    type: freemium
+    description: >-
+      Free banking tier. No monthly fee, no minimum balance. Includes core
+      checking/savings, basic payments, basic invoicing, and free expense
+      reimbursements for up to 5 active users monthly. API access is included for
+      reads and basic writes.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$0'
+        userMultiplied: false
+      - label: Active Users (Reimbursements)
+        name: active_users
+        type: quota
+        metric: user
+        limit: 5
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: API Access
+        name: api_access
+        type: included
+        metric: requests
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Checking and Savings Accounts
+      - name: Free Domestic ACH and Wires (Limits Apply)
+      - name: Basic Invoicing
+      - name: Read API Access
+      - name: 1099 Tax Forms
+  - id: mercury-plus
+    name: Mercury Plus
+    type: subscription
+    description: >-
+      $35/month ($29.17/month annual). Adds recurring invoices, ACH invoice payments
+      ($1 per payment), an invoicing API capped at 500 invoices created per month, up
+      to 20 active users for expense reimbursements, and 6 months of free Xero access.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$35'
+        userMultiplied: false
+      - label: Annual Subscription
+        name: subscription_annual
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$29.17'
+        userMultiplied: false
+      - label: Invoicing API Calls
+        name: invoicing_api
+        type: quota
+        metric: invoice_created
+        limit: 500
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: ACH Invoice Payments
+        name: ach_invoice_payment
+        type: metered
+        metric: payment
+        limit: -1
+        timeFrame: usage
+        unit: 1
+        price: '$1'
+        userMultiplied: false
+      - label: Active Users (Reimbursements)
+        name: active_users
+        type: quota
+        metric: user
+        limit: 20
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Recurring Invoices
+      - name: Invoicing API (500/Month)
+      - name: ACH Invoice Payments ($1/payment)
+      - name: 6 Months Free Xero
+      - name: Up to 20 Active Reimbursement Users
+  - id: mercury-pro
+    name: Mercury Pro
+    type: subscription
+    description: >-
+      $350/month ($291.67/month annual). Everything in Plus, plus a dedicated relationship
+      manager, free ACH invoice payments, unlimited invoicing API, up to 250 active users
+      for reimbursements, and NetSuite enriched automations.
+    entries:
+      - label: Monthly Subscription
+        name: subscription
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$350'
+        userMultiplied: false
+      - label: Annual Subscription
+        name: subscription_annual
+        type: subscription
+        metric: month
+        limit: 1
+        timeFrame: month
+        unit: 1
+        price: '$291.67'
+        userMultiplied: false
+      - label: Invoicing API Calls
+        name: invoicing_api
+        type: included
+        metric: invoice_created
+        limit: -1
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: ACH Invoice Payments
+        name: ach_invoice_payment
+        type: included
+        metric: payment
+        limit: -1
+        timeFrame: usage
+        unit: 1
+        price: included
+        userMultiplied: false
+      - label: Active Users (Reimbursements)
+        name: active_users
+        type: quota
+        metric: user
+        limit: 250
+        timeFrame: month
+        unit: 1
+        price: included
+        userMultiplied: false
+    elements:
+      - name: Dedicated Relationship Manager
+      - name: Free ACH Invoice Payments
+      - name: Unlimited Invoicing API
+      - name: NetSuite Enriched Automations
+      - name: Up to 250 Active Reimbursement Users
 maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+  - FN: Kin Lane
+    email: kin@apievangelist.com
