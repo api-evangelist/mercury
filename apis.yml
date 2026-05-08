@@ -1,0 +1,29 @@
+aid: mercury
+url: https://raw.githubusercontent.com/api-evangelist/mercury/refs/heads/main/apis.yml
+name: Mercury
+x-type: company
+description: >-
+  Mercury is a banking platform built for startups and tech companies, offering checking, savings, and treasury services. The Mercury API exposes accounts, transactions, statements, treasury yields, and ACH/wire payments.
+image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+tags:
+  - Banking
+  - Fintech
+  - Startups
+  - Treasury
+  - Payments
+created: '2026-05-08'
+modified: '2026-05-08'
+specificationVersion: '0.19'
+apis: []
+common:
+  - type: Website
+    url: https://mercury.com/
+  - type: Plans
+    url: plans/mercury-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/mercury-rate-limits.yml
+  - type: FinOps
+    url: finops/mercury-finops.yml
+maintainers:
+  - FN: Kin Lane
+    email: kin@apievangelist.com
