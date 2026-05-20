@@ -135,6 +135,10 @@ apis:
       - type: Documentation
         url: https://docs.mercury.com/reference/webhooks
 common:
+  - type: GitHubOrganization
+    url: https://github.com/MercuryTechnologies
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/mercuryhq
   - type: Website
     url: https://mercury.com/
   - type: Documentation
