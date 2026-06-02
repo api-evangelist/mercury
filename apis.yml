@@ -12,7 +12,7 @@ tags:
   - Treasury
   - Payments
 created: '2026-05-08'
-modified: '2026-05-08'
+modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
   - aid: mercury:accounts
@@ -134,6 +134,8 @@ apis:
     properties:
       - type: Documentation
         url: https://docs.mercury.com/reference/webhooks
+      - type: AsyncAPI
+        url: asyncapi/mercury-webhooks-asyncapi.yml
 common:
   - type: GitHubOrganization
     url: https://github.com/MercuryTechnologies

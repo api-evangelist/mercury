@@ -1,0 +1,390 @@
+asyncapi: 2.6.0
+info:
+  title: Mercury Webhooks
+  version: '1.0.0'
+  description: |-
+    AsyncAPI description of Mercury Banking's outbound webhook surface. Mercury
+    delivers event notifications by issuing HTTP POST requests with a JSON body
+    to a subscriber HTTPS endpoint that is registered through the Mercury
+    Webhooks API. Each delivery represents a single event and is signed so the
+    subscriber can verify authenticity before processing.
+
+    Subscribers register an endpoint (up to 100 per organization) with
+    `POST /webhooks`, optionally narrowing delivery to a subset of event types
+    via `eventTypes` and to specific resource field changes via `filterPaths`.
+    Mercury returns a per-endpoint signing secret on creation that is used to
+    verify the signature on every subsequent delivery.
+
+    Source documentation:
+      - Webhooks overview:           https://docs.mercury.com/reference/webhooks
+      - Create webhook endpoint:     https://docs.mercury.com/reference/createwebhook
+      - Verify webhook endpoint:     https://docs.mercury.com/reference/verifywebhook
+      - Events overview:             https://docs.mercury.com/reference/events
+      - Get event:                   https://docs.mercury.com/reference/getevent
+
+    Signing:
+      Mercury signs each delivery with HMAC-SHA256 using the endpoint's
+      `secretKey` (returned only on webhook creation). The signature is sent in
+      the `Mercury-Signature` header in the format `t=<timestamp>,v1=<signature>`
+      where `<timestamp>` is the Unix timestamp of delivery and `<signature>` is
+      the HMAC-SHA256 of `<timestamp>.<raw_request_body>`. Subscribers should
+      use a constant-time comparison when verifying.
+
+    Delivery and retries:
+      Mercury expects a 2xx response within 5 seconds. Failed deliveries are
+      retried up to 10 times using exponential backoff over roughly one day.
+      4xx responses are treated as terminal and are not retried, with the
+      exception of 429 (rate limited), which is retried.
+  contact:
+    name: Mercury Support
+    url: https://mercury.com/help
+  license:
+    name: Mercury Terms of Service
+    url: https://mercury.com/legal/terms-of-service
+
+defaultContentType: application/json
+
+servers:
+  subscriber:
+    url: '{webhookUrl}'
+    protocol: https
+    description: |-
+      Subscriber-hosted HTTPS endpoint that receives webhook POSTs from
+      Mercury. The full URL (including path) is configured per webhook
+      registration via the Webhooks API.
+    variables:
+      webhookUrl:
+        default: https://example.com/mercury/webhook
+        description: Fully-qualified HTTPS URL of the subscriber endpoint.
+    security:
+      - mercurySignature: []
+
+channels:
+  /mercury/webhook:
+    description: |-
+      Single subscriber endpoint that receives every Mercury webhook event the
+      registration is subscribed to. The event class is identified by the
+      combination of `resourceType` and `operationType` on the JSON body.
+      Mercury sends one event per HTTP POST.
+    bindings:
+      http:
+        type: request
+        method: POST
+        bindingVersion: '0.3.0'
+    publish:
+      operationId: receiveMercuryWebhook
+      summary: Receive a Mercury webhook event
+      description: |-
+        Mercury POSTs a signed JSON event to the subscriber endpoint.
+        Subscribers should verify the `Mercury-Signature` header against the
+        endpoint's signing secret, then respond with a 2xx status code within
+        five seconds. The seven currently-documented event types are modelled
+        as discrete messages below; all of them share the same envelope schema
+        and are distinguished by `resourceType` + `operationType`.
+      message:
+        oneOf:
+          - $ref: '#/components/messages/TransactionCreated'
+          - $ref: '#/components/messages/TransactionUpdated'
+          - $ref: '#/components/messages/CheckingAccountBalanceUpdated'
+          - $ref: '#/components/messages/SavingsAccountBalanceUpdated'
+          - $ref: '#/components/messages/TreasuryAccountBalanceUpdated'
+          - $ref: '#/components/messages/CreditAccountBalanceUpdated'
+          - $ref: '#/components/messages/InvestmentAccountBalanceUpdated'
+
+components:
+  securitySchemes:
+    mercurySignature:
+      type: httpApiKey
+      description: |-
+        HMAC-SHA256 signature delivered in the `Mercury-Signature` header in
+        the format `t=<timestamp>,v1=<signature>`. The signed payload is
+        `<timestamp>.<raw_request_body>` using the endpoint's signing secret
+        returned by `POST /webhooks` at creation time. Modelled as an HTTP API
+        key header because AsyncAPI 2.6 has no first-class HMAC scheme.
+      name: Mercury-Signature
+      in: header
+
+  messages:
+    TransactionCreated:
+      name: TransactionCreatedEvent
+      title: transaction.created
+      summary: A new transaction was created on a Mercury account.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: transaction
+              operationType:
+                const: create
+
+    TransactionUpdated:
+      name: TransactionUpdatedEvent
+      title: transaction.updated
+      summary: An existing transaction was modified on a Mercury account.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: transaction
+              operationType:
+                const: update
+      examples:
+        - name: transactionPosted
+          summary: A pending transaction was posted.
+          payload:
+            id: bfa85eaa-afab-11f0-8fea-17d650f2306e
+            resourceType: transaction
+            resourceId: 1d3042b6-af63-11f0-89d2-3503f2fcfef7
+            operationType: update
+            resourceVersion: 2
+            occurredAt: '2025-01-01T00:00:00.000000Z'
+            changedPaths:
+              - status
+              - postedAt
+            mergePatch:
+              postedAt: '2025-01-01T00:00:00.000000+00:00'
+              status: sent
+            previousValues:
+              postedAt: null
+              status: pending
+
+    CheckingAccountBalanceUpdated:
+      name: CheckingAccountBalanceUpdatedEvent
+      title: checkingAccount.balance.updated
+      summary: The balance on a Mercury checking account changed.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: checkingAccount
+              operationType:
+                const: update
+
+    SavingsAccountBalanceUpdated:
+      name: SavingsAccountBalanceUpdatedEvent
+      title: savingsAccount.balance.updated
+      summary: The balance on a Mercury savings account changed.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: savingsAccount
+              operationType:
+                const: update
+
+    TreasuryAccountBalanceUpdated:
+      name: TreasuryAccountBalanceUpdatedEvent
+      title: treasuryAccount.balance.updated
+      summary: The balance on a Mercury Treasury account changed.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: treasuryAccount
+              operationType:
+                const: update
+
+    CreditAccountBalanceUpdated:
+      name: CreditAccountBalanceUpdatedEvent
+      title: creditAccount.balance.updated
+      summary: The balance on a Mercury credit account changed.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: creditAccount
+              operationType:
+                const: update
+
+    InvestmentAccountBalanceUpdated:
+      name: InvestmentAccountBalanceUpdatedEvent
+      title: investmentAccount.balance.updated
+      summary: The balance on a Mercury investment account changed.
+      contentType: application/json
+      bindings:
+        http:
+          headers:
+            type: object
+            properties:
+              Content-Type:
+                type: string
+                const: application/json
+              Mercury-Signature:
+                type: string
+                description: HMAC-SHA256 signature, format `t=<ts>,v1=<sig>`.
+          bindingVersion: '0.3.0'
+      payload:
+        allOf:
+          - $ref: '#/components/schemas/EventEnvelope'
+          - type: object
+            properties:
+              resourceType:
+                const: investmentAccount
+              operationType:
+                const: update
+
+  schemas:
+    EventEnvelope:
+      type: object
+      description: |-
+        Common envelope shared by every Mercury webhook delivery and by the
+        synchronous `GET /events/{eventId}` response. Event-specific messages
+        narrow `resourceType` and `operationType` to fixed values.
+      required:
+        - id
+        - resourceType
+        - resourceId
+        - operationType
+        - resourceVersion
+        - occurredAt
+        - changedPaths
+        - mergePatch
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for this event.
+        resourceType:
+          $ref: '#/components/schemas/ResourceType'
+        resourceId:
+          type: string
+          format: uuid
+          description: The ID of the resource that was affected.
+        operationType:
+          $ref: '#/components/schemas/OperationType'
+        resourceVersion:
+          type: integer
+          format: int64
+          minimum: 1
+          description: Version number of the resource after this change.
+        occurredAt:
+          type: string
+          format: date-time
+          description: Timestamp when the event occurred (ISO 8601, UTC).
+        changedPaths:
+          type: array
+          description: List of JSON paths that were modified in this event.
+          items:
+            type: string
+        mergePatch:
+          type: object
+          description: |-
+            RFC 7396 JSON merge patch containing the fields that changed and
+            their new values.
+          additionalProperties: true
+        previousValues:
+          type: object
+          description: |-
+            Prior values of the fields listed in `changedPaths`. Nullable;
+            omitted or null for create events where there is no prior state.
+          nullable: true
+          additionalProperties: true
+
+    ResourceType:
+      type: string
+      description: Mercury resource type that generated the event.
+      enum:
+        - transaction
+        - checkingAccount
+        - savingsAccount
+        - treasuryAccount
+        - creditAccount
+        - investmentAccount
+
+    OperationType:
+      type: string
+      description: Kind of change that occurred to the resource.
+      enum:
+        - create
+        - update
+        - delete
