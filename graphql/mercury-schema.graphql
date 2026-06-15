@@ -1,0 +1,871 @@
+"""
+Mercury GraphQL Schema
+Conceptual GraphQL SDL derived from the Mercury REST API.
+Mercury is a banking platform for startups and growth-stage companies covering
+accounts, transactions, wire transfers, ACH payments, checks, debit cards,
+account statements, and treasury management.
+"""
+
+# ─────────────────────────────────────────────
+# Scalar types
+# ─────────────────────────────────────────────
+
+scalar DateTime
+scalar Date
+scalar Decimal
+scalar UUID
+scalar JSONObject
+
+# ─────────────────────────────────────────────
+# Enums
+# ─────────────────────────────────────────────
+
+enum AccountType {
+  CHECKING
+  SAVINGS
+  TREASURY
+}
+
+enum AccountStatus {
+  ACTIVE
+  SUSPENDED
+  CLOSED
+  PENDING
+}
+
+enum TransactionStatus {
+  PENDING
+  SENT
+  CANCELLED
+  FAILED
+  REVERSED
+}
+
+enum TransactionKind {
+  ACH
+  WIRE
+  CARD
+  INTERNAL_TRANSFER
+  FEE
+  CHECK
+  DEBIT
+  CREDIT
+  INTERNATIONAL_WIRE
+}
+
+enum PaymentStatus {
+  PENDING_REVIEW
+  PENDING_APPROVAL
+  PENDING
+  SENT
+  CANCELLED
+  FAILED
+  REVERSED
+}
+
+enum PaymentType {
+  ACH
+  DOMESTIC_WIRE
+  INTERNATIONAL_WIRE
+  CHECK
+}
+
+enum RecipientStatus {
+  ACTIVE
+  ARCHIVED
+  PENDING_APPROVAL
+}
+
+enum CardStatus {
+  ACTIVE
+  FROZEN
+  CANCELLED
+  PENDING_ACTIVATION
+}
+
+enum CardType {
+  VIRTUAL
+  PHYSICAL
+}
+
+enum WebhookStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum WebhookEventType {
+  TRANSACTION_CREATED
+  TRANSACTION_UPDATED
+  PAYMENT_STATUS_CHANGED
+  ACCOUNT_BALANCE_THRESHOLD
+  CARD_TRANSACTION_CREATED
+  RECIPIENT_APPROVED
+  WIRE_SENT
+  ACH_RETURNED
+}
+
+enum WebhookDeliveryStatus {
+  SUCCESS
+  FAILURE
+  PENDING
+}
+
+enum BankRoutingType {
+  ABA
+  SWIFT
+  SORT_CODE
+  IFSC
+  BSB
+}
+
+enum ACHTransactionClass {
+  PPD
+  CCD
+  WEB
+  TEL
+}
+
+enum StatementFileFormat {
+  PDF
+  CSV
+}
+
+enum TreasuryAllocationKind {
+  MONEY_MARKET
+  TREASURY_BILLS
+  GOVERNMENT_BONDS
+}
+
+enum CheckStatus {
+  PENDING
+  CLEARED
+  VOIDED
+  RETURNED
+  STOP_PAYMENT
+}
+
+enum ApprovalStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  CANCELLED
+}
+
+enum CurrencyCode {
+  USD
+  EUR
+  GBP
+  CAD
+  AUD
+  SGD
+  HKD
+}
+
+# ─────────────────────────────────────────────
+# Core domain types
+# ─────────────────────────────────────────────
+
+"""A Mercury bank account (checking, savings, or treasury)."""
+type Account {
+  id: UUID!
+  name: String!
+  type: AccountType!
+  status: AccountStatus!
+  currentBalance: Decimal!
+  availableBalance: Decimal!
+  accountNumber: String!
+  routingNumber: String!
+  legalBusinessName: String!
+  dashboardLink: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  transactions(
+    limit: Int
+    offset: Int
+    status: TransactionStatus
+    startDate: Date
+    endDate: Date
+    minAmount: Decimal
+    maxAmount: Decimal
+  ): TransactionConnection!
+  statements(year: Int): [Statement!]!
+  cards: [Card!]!
+  organization: Organization!
+}
+
+"""Paginated list of accounts."""
+type AccountConnection {
+  nodes: [Account!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""A financial transaction on a Mercury account."""
+type Transaction {
+  id: UUID!
+  accountId: UUID!
+  account: Account!
+  amount: Decimal!
+  currency: CurrencyCode!
+  kind: TransactionKind!
+  status: TransactionStatus!
+  direction: TransactionDirection!
+  counterpartyName: String
+  counterpartyId: UUID
+  counterparty: Recipient
+  note: String
+  externalMemo: String
+  postedAt: DateTime
+  estimatedDeliveryAt: DateTime
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  bankDescription: String
+  failureReason: String
+  paymentId: UUID
+  checkNumber: String
+  cardId: UUID
+  card: Card
+  metadata: JSONObject
+}
+
+enum TransactionDirection {
+  CREDIT
+  DEBIT
+}
+
+"""Paginated list of transactions."""
+type TransactionConnection {
+  nodes: [Transaction!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""A monthly account statement."""
+type Statement {
+  id: UUID!
+  accountId: UUID!
+  account: Account!
+  startDate: Date!
+  endDate: Date!
+  year: Int!
+  month: Int!
+  downloadUrl: String!
+  fileFormat: StatementFileFormat!
+  generatedAt: DateTime!
+}
+
+"""A payment recipient (counterparty for ACH/wire/check payments)."""
+type Recipient {
+  id: UUID!
+  name: String!
+  status: RecipientStatus!
+  emails: [String!]!
+  routingNumber: String
+  accountNumber: String
+  bankName: String
+  routingType: BankRoutingType
+  paymentTypes: [PaymentType!]!
+  address: Address
+  defaultNote: String
+  approvalStatus: ApprovalStatus
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  transactions: [Transaction!]!
+  internationalDetails: InternationalRecipientDetails
+}
+
+"""Paginated list of recipients."""
+type RecipientConnection {
+  nodes: [Recipient!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""An outbound payment initiated from a Mercury account."""
+type Payment {
+  id: UUID!
+  accountId: UUID!
+  account: Account!
+  recipientId: UUID!
+  recipient: Recipient!
+  amount: Decimal!
+  currency: CurrencyCode!
+  paymentType: PaymentType!
+  status: PaymentStatus!
+  scheduledDate: Date
+  postedAt: DateTime
+  estimatedDeliveryAt: DateTime
+  memo: String
+  note: String
+  externalMemo: String
+  approvalStatus: ApprovalStatus
+  idempotencyKey: String
+  failureReason: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  transaction: Transaction
+  achDetails: ACHPaymentDetails
+  wireDetails: WirePaymentDetails
+  checkDetails: CheckPaymentDetails
+}
+
+"""Paginated list of payments."""
+type PaymentConnection {
+  nodes: [Payment!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""Details specific to ACH payments."""
+type ACHPaymentDetails {
+  transactionClass: ACHTransactionClass!
+  companyName: String
+  companyEntryDescription: String
+  companyDiscretionaryData: String
+  individualIdNumber: String
+  returnCode: String
+  returnReason: String
+  traceNumber: String
+}
+
+"""Details specific to domestic or international wire payments."""
+type WirePaymentDetails {
+  fedReferenceNumber: String
+  senderReferenceNumber: String
+  beneficiaryBankName: String
+  beneficiaryBankSwift: String
+  intermediaryBank: String
+  purposeOfPayment: String
+}
+
+"""Details specific to check payments."""
+type CheckPaymentDetails {
+  checkNumber: String!
+  checkStatus: CheckStatus!
+  clearedAt: DateTime
+  voidedAt: DateTime
+  imageUrl: String
+}
+
+"""A Mercury corporate debit or virtual card."""
+type Card {
+  id: UUID!
+  accountId: UUID!
+  account: Account!
+  cardholderName: String!
+  lastFour: String!
+  type: CardType!
+  status: CardStatus!
+  spendingLimits: SpendingLimits
+  expiresAt: Date
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  transactions(
+    limit: Int
+    offset: Int
+    startDate: Date
+    endDate: Date
+  ): TransactionConnection!
+  cardHolder: CardHolder
+}
+
+"""Paginated list of cards."""
+type CardConnection {
+  nodes: [Card!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""Spending limits applied to a Mercury card."""
+type SpendingLimits {
+  daily: Decimal
+  weekly: Decimal
+  monthly: Decimal
+  perTransaction: Decimal
+}
+
+"""Cardholder (employee or authorized user) linked to a card."""
+type CardHolder {
+  id: UUID!
+  name: String!
+  email: String!
+  role: String
+  createdAt: DateTime!
+}
+
+"""Treasury account details for organizations enrolled in Mercury Treasury."""
+type TreasuryAccount {
+  id: UUID!
+  organizationId: UUID!
+  totalBalance: Decimal!
+  availableBalance: Decimal!
+  yieldRate: Decimal!
+  accruedYield: Decimal!
+  currency: CurrencyCode!
+  allocations: [TreasuryAllocation!]!
+  transactions: [TreasuryTransaction!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""Allocation of funds within Mercury Treasury across underlying vehicles."""
+type TreasuryAllocation {
+  id: UUID!
+  kind: TreasuryAllocationKind!
+  name: String!
+  balance: Decimal!
+  percentage: Decimal!
+  yieldRate: Decimal!
+  provider: String
+}
+
+"""A transaction within the Mercury Treasury account."""
+type TreasuryTransaction {
+  id: UUID!
+  treasuryAccountId: UUID!
+  amount: Decimal!
+  direction: TransactionDirection!
+  type: TreasuryTransactionType!
+  status: TransactionStatus!
+  description: String
+  createdAt: DateTime!
+  settledAt: DateTime
+}
+
+enum TreasuryTransactionType {
+  DEPOSIT
+  WITHDRAWAL
+  YIELD_CREDIT
+  FEE
+  REBALANCE
+}
+
+"""A webhook subscription for Mercury event notifications."""
+type Webhook {
+  id: UUID!
+  url: String!
+  status: WebhookStatus!
+  eventTypes: [WebhookEventType!]!
+  secret: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  deliveries(limit: Int, offset: Int): WebhookDeliveryConnection!
+}
+
+"""Paginated list of webhooks."""
+type WebhookConnection {
+  nodes: [Webhook!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""A single webhook delivery attempt."""
+type WebhookDelivery {
+  id: UUID!
+  webhookId: UUID!
+  webhook: Webhook!
+  eventType: WebhookEventType!
+  payload: JSONObject!
+  status: WebhookDeliveryStatus!
+  httpStatusCode: Int
+  attemptedAt: DateTime!
+  responseBody: String
+  durationMs: Int
+}
+
+"""Paginated list of webhook deliveries."""
+type WebhookDeliveryConnection {
+  nodes: [WebhookDelivery!]!
+  total: Int!
+  pageInfo: PageInfo!
+}
+
+"""The authenticated Mercury organization."""
+type Organization {
+  id: UUID!
+  name: String!
+  legalName: String!
+  ein: String
+  website: String
+  address: Address
+  accounts(type: AccountType, status: AccountStatus): AccountConnection!
+  recipients(status: RecipientStatus): RecipientConnection!
+  cards(status: CardStatus): CardConnection!
+  treasury: TreasuryAccount
+  webhooks: WebhookConnection!
+  teamMembers: [TeamMember!]!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+"""A team member with access to the Mercury dashboard or API."""
+type TeamMember {
+  id: UUID!
+  name: String!
+  email: String!
+  role: TeamMemberRole!
+  status: TeamMemberStatus!
+  createdAt: DateTime!
+  lastLoginAt: DateTime
+}
+
+enum TeamMemberRole {
+  ADMIN
+  BOOKKEEPER
+  CARD_USER
+  DEVELOPER
+  VIEWER
+}
+
+enum TeamMemberStatus {
+  ACTIVE
+  INVITED
+  DEACTIVATED
+}
+
+"""A physical or mailing address."""
+type Address {
+  line1: String!
+  line2: String
+  city: String!
+  state: String
+  postalCode: String!
+  country: String!
+}
+
+"""Details required for international wire recipients."""
+type InternationalRecipientDetails {
+  swiftCode: String
+  iban: String
+  bankAddress: Address
+  intermediaryBank: String
+  purposeOfPayment: String
+  currencyCode: CurrencyCode
+}
+
+"""A pending approval request for payments or recipients."""
+type ApprovalRequest {
+  id: UUID!
+  type: ApprovalRequestType!
+  status: ApprovalStatus!
+  requestedBy: TeamMember!
+  reviewedBy: TeamMember
+  amount: Decimal
+  currency: CurrencyCode
+  description: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
+  expiresAt: DateTime
+}
+
+enum ApprovalRequestType {
+  PAYMENT
+  RECIPIENT
+  CARD_LIMIT_CHANGE
+  ACCOUNT_CHANGE
+}
+
+"""Standard pagination info."""
+type PageInfo {
+  hasNextPage: Boolean!
+  hasPreviousPage: Boolean!
+  startCursor: String
+  endCursor: String
+}
+
+"""API key or OAuth credential used to authenticate with Mercury."""
+type ApiCredential {
+  id: UUID!
+  name: String!
+  scopes: [String!]!
+  createdAt: DateTime!
+  lastUsedAt: DateTime
+  expiresAt: DateTime
+  ipWhitelist: [String!]!
+}
+
+"""A balance snapshot captured at a point in time."""
+type BalanceSnapshot {
+  accountId: UUID!
+  snapshotDate: Date!
+  currentBalance: Decimal!
+  availableBalance: Decimal!
+  capturedAt: DateTime!
+}
+
+"""Aggregated spending summary by category or time period."""
+type SpendingSummary {
+  accountId: UUID!
+  period: String!
+  startDate: Date!
+  endDate: Date!
+  totalDebits: Decimal!
+  totalCredits: Decimal!
+  netChange: Decimal!
+  byKind: [SpendingByKind!]!
+}
+
+"""Spending breakdown for a single transaction kind."""
+type SpendingByKind {
+  kind: TransactionKind!
+  totalAmount: Decimal!
+  transactionCount: Int!
+}
+
+# ─────────────────────────────────────────────
+# Input types
+# ─────────────────────────────────────────────
+
+input CreatePaymentInput {
+  accountId: UUID!
+  recipientId: UUID!
+  amount: Decimal!
+  paymentType: PaymentType!
+  memo: String
+  note: String
+  scheduledDate: Date
+  idempotencyKey: String
+  achDetails: ACHPaymentInput
+  wireDetails: WirePaymentInput
+}
+
+input ACHPaymentInput {
+  transactionClass: ACHTransactionClass
+  companyEntryDescription: String
+}
+
+input WirePaymentInput {
+  purposeOfPayment: String
+}
+
+input CreateRecipientInput {
+  name: String!
+  emails: [String!]
+  routingNumber: String
+  accountNumber: String
+  bankName: String
+  routingType: BankRoutingType
+  paymentTypes: [PaymentType!]!
+  address: AddressInput
+  defaultNote: String
+  internationalDetails: InternationalRecipientInput
+}
+
+input UpdateRecipientInput {
+  name: String
+  emails: [String!]
+  defaultNote: String
+  address: AddressInput
+}
+
+input AddressInput {
+  line1: String!
+  line2: String
+  city: String!
+  state: String
+  postalCode: String!
+  country: String!
+}
+
+input InternationalRecipientInput {
+  swiftCode: String
+  iban: String
+  bankAddress: AddressInput
+  intermediaryBank: String
+  purposeOfPayment: String
+  currencyCode: CurrencyCode
+}
+
+input CreateWebhookInput {
+  url: String!
+  eventTypes: [WebhookEventType!]!
+}
+
+input UpdateWebhookInput {
+  url: String
+  eventTypes: [WebhookEventType!]
+  status: WebhookStatus
+}
+
+input TransactionFilterInput {
+  status: TransactionStatus
+  kind: TransactionKind
+  startDate: Date
+  endDate: Date
+  minAmount: Decimal
+  maxAmount: Decimal
+  search: String
+}
+
+input PaginationInput {
+  limit: Int
+  offset: Int
+  after: String
+  before: String
+}
+
+# ─────────────────────────────────────────────
+# Query root
+# ─────────────────────────────────────────────
+
+type Query {
+  """Fetch the authenticated organization."""
+  organization: Organization!
+
+  """List all accounts for the organization."""
+  accounts(type: AccountType, status: AccountStatus, pagination: PaginationInput): AccountConnection!
+
+  """Fetch a single account by ID."""
+  account(id: UUID!): Account
+
+  """List transactions across all accounts or for a specific account."""
+  transactions(accountId: UUID, filter: TransactionFilterInput, pagination: PaginationInput): TransactionConnection!
+
+  """Fetch a single transaction by ID."""
+  transaction(id: UUID!): Transaction
+
+  """List statements for an account."""
+  statements(accountId: UUID!, year: Int): [Statement!]!
+
+  """List payment recipients."""
+  recipients(status: RecipientStatus, pagination: PaginationInput): RecipientConnection!
+
+  """Fetch a single recipient by ID."""
+  recipient(id: UUID!): Recipient
+
+  """List outbound payments."""
+  payments(accountId: UUID, status: PaymentStatus, paymentType: PaymentType, pagination: PaginationInput): PaymentConnection!
+
+  """Fetch a single payment by ID."""
+  payment(id: UUID!): Payment
+
+  """List corporate cards."""
+  cards(accountId: UUID, status: CardStatus, pagination: PaginationInput): CardConnection!
+
+  """Fetch a single card by ID."""
+  card(id: UUID!): Card
+
+  """Fetch treasury account details."""
+  treasuryAccount: TreasuryAccount
+
+  """List webhook subscriptions."""
+  webhooks(pagination: PaginationInput): WebhookConnection!
+
+  """Fetch a single webhook by ID."""
+  webhook(id: UUID!): Webhook
+
+  """Fetch webhook delivery history for a webhook."""
+  webhookDeliveries(webhookId: UUID!, pagination: PaginationInput): WebhookDeliveryConnection!
+
+  """List team members."""
+  teamMembers: [TeamMember!]!
+
+  """Fetch a balance snapshot for an account on a given date."""
+  balanceSnapshot(accountId: UUID!, date: Date!): BalanceSnapshot
+
+  """Fetch spending summary for an account."""
+  spendingSummary(accountId: UUID!, startDate: Date!, endDate: Date!): SpendingSummary
+
+  """List pending approval requests."""
+  approvalRequests(status: ApprovalStatus, type: ApprovalRequestType): [ApprovalRequest!]!
+
+  """List API credentials."""
+  apiCredentials: [ApiCredential!]!
+}
+
+# ─────────────────────────────────────────────
+# Mutation root
+# ─────────────────────────────────────────────
+
+type Mutation {
+  """Initiate an outbound payment (ACH or wire)."""
+  createPayment(input: CreatePaymentInput!): PaymentResult!
+
+  """Cancel a pending payment."""
+  cancelPayment(paymentId: UUID!): PaymentResult!
+
+  """Create a new payment recipient."""
+  createRecipient(input: CreateRecipientInput!): RecipientResult!
+
+  """Update an existing recipient."""
+  updateRecipient(id: UUID!, input: UpdateRecipientInput!): RecipientResult!
+
+  """Archive a recipient."""
+  archiveRecipient(id: UUID!): RecipientResult!
+
+  """Approve a pending recipient."""
+  approveRecipient(id: UUID!): RecipientResult!
+
+  """Freeze a card."""
+  freezeCard(cardId: UUID!): CardResult!
+
+  """Unfreeze a card."""
+  unfreezeCard(cardId: UUID!): CardResult!
+
+  """Update spending limits on a card."""
+  updateCardSpendingLimits(cardId: UUID!, limits: SpendingLimitsInput!): CardResult!
+
+  """Register a new webhook endpoint."""
+  createWebhook(input: CreateWebhookInput!): WebhookResult!
+
+  """Update a webhook subscription."""
+  updateWebhook(id: UUID!, input: UpdateWebhookInput!): WebhookResult!
+
+  """Delete a webhook subscription."""
+  deleteWebhook(id: UUID!): DeleteResult!
+
+  """Approve a pending approval request."""
+  approveRequest(requestId: UUID!): ApprovalRequestResult!
+
+  """Reject a pending approval request."""
+  rejectRequest(requestId: UUID!, reason: String): ApprovalRequestResult!
+}
+
+input SpendingLimitsInput {
+  daily: Decimal
+  weekly: Decimal
+  monthly: Decimal
+  perTransaction: Decimal
+}
+
+# ─────────────────────────────────────────────
+# Result / union types
+# ─────────────────────────────────────────────
+
+union PaymentResult = Payment | MercuryError
+union RecipientResult = Recipient | MercuryError
+union CardResult = Card | MercuryError
+union WebhookResult = Webhook | MercuryError
+union ApprovalRequestResult = ApprovalRequest | MercuryError
+
+type DeleteResult {
+  success: Boolean!
+  id: UUID
+  error: MercuryError
+}
+
+"""Structured error returned by Mercury API mutations."""
+type MercuryError {
+  code: String!
+  message: String!
+  field: String
+  details: JSONObject
+}
+
+# ─────────────────────────────────────────────
+# Subscription root (event-driven / webhook proxy)
+# ─────────────────────────────────────────────
+
+type Subscription {
+  """Stream transaction events for an account in real time."""
+  transactionCreated(accountId: UUID!): Transaction!
+
+  """Stream payment status changes."""
+  paymentStatusChanged(accountId: UUID): Payment!
+
+  """Stream card transaction events."""
+  cardTransactionCreated(cardId: UUID): Transaction!
+
+  """Stream account balance updates."""
+  accountBalanceUpdated(accountId: UUID!): Account!
+}

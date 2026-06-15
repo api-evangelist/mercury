@@ -2,157 +2,154 @@ aid: mercury
 url: https://raw.githubusercontent.com/api-evangelist/mercury/refs/heads/main/apis.yml
 name: Mercury
 kind: company
-description: >-
-  Mercury is a banking platform built for startups and tech companies, offering checking, savings, treasury, and corporate-card services. The Mercury REST API exposes accounts, transactions, statements, recipients, ACH and wire payments, treasury yield, and webhooks.
+description: Mercury is a banking platform built for startups and tech companies,
+  offering checking, savings, treasury, and corporate-card services. The Mercury REST
+  API exposes accounts, transactions, statements, recipients, ACH and wire payments,
+  treasury yield, and webhooks.
 image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 tags:
-  - Banking
-  - Fintech
-  - Startups
-  - Treasury
-  - Payments
+- Banking
+- Fintech
+- Startups
+- Treasury
+- Payments
 created: '2026-05-08'
 modified: '2026-05-30'
 specificationVersion: '0.19'
 apis:
-  - aid: mercury:accounts
-    name: Mercury Accounts API
-    description: >-
-      Read access to all Mercury accounts (checking, savings, treasury) opened under the
-      authenticated organization. Returns account ID, name, type, status, current and
-      available balances, account number, routing number, and account-holder details.
-    humanURL: https://docs.mercury.com/reference/accounts
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Accounts
-      - Banking
-      - Balance
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/accounts
-  - aid: mercury:transactions
-    name: Mercury Transactions API
-    description: >-
-      Lists and retrieves transactions for a given Mercury account. Supports filtering
-      by date range, status (pending, sent, cancelled, failed), and amount, plus
-      pagination. Returns counterparty information, kind (ACH, wire, card, internal
-      transfer, fee), category, note, and audit timestamps.
-    humanURL: https://docs.mercury.com/reference/transactions
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Transactions
-      - Reporting
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/transactions
-  - aid: mercury:statements
-    name: Mercury Statements API
-    description: >-
-      Retrieves monthly account statements for a Mercury account. Each statement returns
-      the start and end dates and a downloadable PDF URL.
-    humanURL: https://docs.mercury.com/reference/get-statements
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Statements
-      - Reporting
-      - PDF
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/get-statements
-  - aid: mercury:recipients
-    name: Mercury Recipients API
-    description: >-
-      Manages payment recipients (counterparties for outbound ACH and wire payments).
-      Supports creating, retrieving, listing, updating, archiving, and approving
-      recipients. Read-and-write access to this endpoint requires IP whitelisting.
-    humanURL: https://docs.mercury.com/reference/recipients
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Recipients
-      - Counterparties
-      - Payments
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/recipients
-  - aid: mercury:payments
-    name: Mercury Payments API
-    description: >-
-      Sends outbound ACH and domestic wire payments from a Mercury account to a
-      recipient. Includes operations for requesting a send-money payment, retrieving
-      its status, and cancelling pending payments. Read-and-write tokens are required
-      and must originate from a whitelisted IP.
-    humanURL: https://docs.mercury.com/reference/send-money
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Payments
-      - ACH
-      - Wire
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/send-money
-  - aid: mercury:cards
-    name: Mercury Cards API
-    description: >-
-      Read access to corporate card metadata - status, last four digits, the linked
-      account, the card holder, and spending limits.
-    humanURL: https://docs.mercury.com/reference/cards
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Cards
-      - Spending
-      - Corporate Cards
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/cards
-  - aid: mercury:treasury
-    name: Mercury Treasury API
-    description: >-
-      Surfaces treasury account details for organizations enrolled in Mercury Treasury,
-      including yield, allocation across underlying money-market and Treasury bill
-      portfolios, and current balance.
-    humanURL: https://docs.mercury.com/reference/treasury
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Treasury
-      - Yield
-      - Cash Management
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/treasury
-  - aid: mercury:webhooks
-    name: Mercury Webhooks API
-    description: >-
-      Subscribes a partner application to event notifications such as transaction
-      created/updated, payment status change, and account balance threshold events.
-      Mercury signs each delivery so receivers can verify authenticity.
-    humanURL: https://docs.mercury.com/reference/webhooks
-    baseURL: https://api.mercury.com/api/v1
-    tags:
-      - Webhooks
-      - Events
-      - Notifications
-    properties:
-      - type: Documentation
-        url: https://docs.mercury.com/reference/webhooks
-      - type: AsyncAPI
-        url: asyncapi/mercury-webhooks-asyncapi.yml
-common:
-  - type: GitHubOrganization
-    url: https://github.com/MercuryTechnologies
-  - type: LinkedIn
-    url: https://www.linkedin.com/company/mercuryhq
-  - type: Website
-    url: https://mercury.com/
+- aid: mercury:accounts
+  name: Mercury Accounts API
+  description: Read access to all Mercury accounts (checking, savings, treasury) opened
+    under the authenticated organization. Returns account ID, name, type, status,
+    current and available balances, account number, routing number, and account-holder
+    details.
+  humanURL: https://docs.mercury.com/reference/accounts
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Accounts
+  - Banking
+  - Balance
+  properties:
   - type: Documentation
-    url: https://docs.mercury.com/
-  - type: Plans
-    url: plans/mercury-plans-pricing.yml
-  - type: RateLimits
-    url: rate-limits/mercury-rate-limits.yml
-  - type: FinOps
-    url: finops/mercury-finops.yml
-  - type: LLMsTxt
-    url: https://docs.mercury.com/llms.txt
+    url: https://docs.mercury.com/reference/accounts
+  - url: graphql/mercury-graphql.md
+    type: GraphQL
+- aid: mercury:transactions
+  name: Mercury Transactions API
+  description: Lists and retrieves transactions for a given Mercury account. Supports
+    filtering by date range, status (pending, sent, cancelled, failed), and amount,
+    plus pagination. Returns counterparty information, kind (ACH, wire, card, internal
+    transfer, fee), category, note, and audit timestamps.
+  humanURL: https://docs.mercury.com/reference/transactions
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Transactions
+  - Reporting
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/transactions
+- aid: mercury:statements
+  name: Mercury Statements API
+  description: Retrieves monthly account statements for a Mercury account. Each statement
+    returns the start and end dates and a downloadable PDF URL.
+  humanURL: https://docs.mercury.com/reference/get-statements
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Statements
+  - Reporting
+  - PDF
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/get-statements
+- aid: mercury:recipients
+  name: Mercury Recipients API
+  description: Manages payment recipients (counterparties for outbound ACH and wire
+    payments). Supports creating, retrieving, listing, updating, archiving, and approving
+    recipients. Read-and-write access to this endpoint requires IP whitelisting.
+  humanURL: https://docs.mercury.com/reference/recipients
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Recipients
+  - Counterparties
+  - Payments
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/recipients
+- aid: mercury:payments
+  name: Mercury Payments API
+  description: Sends outbound ACH and domestic wire payments from a Mercury account
+    to a recipient. Includes operations for requesting a send-money payment, retrieving
+    its status, and cancelling pending payments. Read-and-write tokens are required
+    and must originate from a whitelisted IP.
+  humanURL: https://docs.mercury.com/reference/send-money
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Payments
+  - ACH
+  - Wire
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/send-money
+- aid: mercury:cards
+  name: Mercury Cards API
+  description: Read access to corporate card metadata - status, last four digits,
+    the linked account, the card holder, and spending limits.
+  humanURL: https://docs.mercury.com/reference/cards
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Cards
+  - Spending
+  - Corporate Cards
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/cards
+- aid: mercury:treasury
+  name: Mercury Treasury API
+  description: Surfaces treasury account details for organizations enrolled in Mercury
+    Treasury, including yield, allocation across underlying money-market and Treasury
+    bill portfolios, and current balance.
+  humanURL: https://docs.mercury.com/reference/treasury
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Treasury
+  - Yield
+  - Cash Management
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/treasury
+- aid: mercury:webhooks
+  name: Mercury Webhooks API
+  description: Subscribes a partner application to event notifications such as transaction
+    created/updated, payment status change, and account balance threshold events.
+    Mercury signs each delivery so receivers can verify authenticity.
+  humanURL: https://docs.mercury.com/reference/webhooks
+  baseURL: https://api.mercury.com/api/v1
+  tags:
+  - Webhooks
+  - Events
+  - Notifications
+  properties:
+  - type: Documentation
+    url: https://docs.mercury.com/reference/webhooks
+  - type: AsyncAPI
+    url: asyncapi/mercury-webhooks-asyncapi.yml
+common:
+- type: GitHubOrganization
+  url: https://github.com/MercuryTechnologies
+- type: LinkedIn
+  url: https://www.linkedin.com/company/mercuryhq
+- type: Website
+  url: https://mercury.com/
+- type: Documentation
+  url: https://docs.mercury.com/
+- type: Plans
+  url: plans/mercury-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/mercury-rate-limits.yml
+- type: FinOps
+  url: finops/mercury-finops.yml
+- type: LLMsTxt
+  url: https://docs.mercury.com/llms.txt
 maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
+- FN: Kin Lane
+  email: kin@apievangelist.com
