@@ -6,7 +6,7 @@ description: Mercury is a banking platform built for startups and tech companies
   offering checking, savings, treasury, and corporate-card services. The Mercury REST
   API exposes accounts, transactions, statements, recipients, ACH and wire payments,
   treasury yield, and webhooks.
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 tags:
 - Banking
 - Fintech
