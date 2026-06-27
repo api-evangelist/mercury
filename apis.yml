@@ -148,7 +148,7 @@ common:
   url: rate-limits/mercury-rate-limits.yml
 - type: FinOps
   url: finops/mercury-finops.yml
-- type: LLMsTxt
+- type: LlmsText
   url: https://docs.mercury.com/llms.txt
 maintainers:
 - FN: Kin Lane
