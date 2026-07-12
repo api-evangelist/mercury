@@ -134,6 +134,10 @@ apis:
   - type: AsyncAPI
     url: asyncapi/mercury-webhooks-asyncapi.yml
 common:
+- type: DomainSecurity
+  url: security/mercury-domain-security.yml
+- type: Authentication
+  url: authentication/mercury-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/MercuryTechnologies
 - type: LinkedIn
@@ -150,6 +154,8 @@ common:
   url: finops/mercury-finops.yml
 - type: LlmsText
   url: https://docs.mercury.com/llms.txt
+- url: https://mercury.com/blog
+  type: Blog
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

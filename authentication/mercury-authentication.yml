@@ -1,0 +1,17 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/mercury-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  bearerFormat: token
+  description: |-
+    Mercury API token (read-only or read-and-write). Send as
+    "Authorization: Bearer {token}". Read-and-write tokens require
+    IP whitelisting.
+  sources:
+  - openapi/mercury-openapi.yml
