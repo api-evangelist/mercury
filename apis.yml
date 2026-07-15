@@ -134,6 +134,8 @@ apis:
   - type: AsyncAPI
     url: asyncapi/mercury-webhooks-asyncapi.yml
 common:
+- type: AgenticAccess
+  url: agentic-access/mercury-agentic-access.yml
 - type: DomainSecurity
   url: security/mercury-domain-security.yml
 - type: Authentication
