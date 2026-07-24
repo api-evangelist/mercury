@@ -1,0 +1,104 @@
+openapi: 3.1.0
+info:
+  title: Mercury Accounts Transactions API
+  description: 'Mercury is a banking platform for startups. The Mercury REST API exposes
+
+    accounts, transactions, statements, recipients, payments (ACH and wire),
+
+    cards, treasury, and webhooks. Read-and-write tokens for sending money
+
+    require IP whitelisting. Authenticate with a Bearer API token.
+
+    '
+  version: v1
+  contact:
+    name: Mercury
+    url: https://docs.mercury.com/
+servers:
+- url: https://api.mercury.com/api/v1
+  description: Mercury production API
+security:
+- bearerAuth: []
+tags:
+- name: Transactions
+paths:
+  /accounts/{id}/transactions:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - name: limit
+      in: query
+      schema:
+        type: integer
+    - name: offset
+      in: query
+      schema:
+        type: integer
+    - name: status
+      in: query
+      schema:
+        type: string
+        enum:
+        - pending
+        - sent
+        - cancelled
+        - failed
+    - name: start
+      in: query
+      schema:
+        type: string
+        format: date
+    - name: end
+      in: query
+      schema:
+        type: string
+        format: date
+    get:
+      tags:
+      - Transactions
+      summary: List transactions for an account
+      responses:
+        '200':
+          description: Paginated transactions
+  /accounts/{id}/transactions/{transactionId}:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    - name: transactionId
+      in: path
+      required: true
+      schema:
+        type: string
+    get:
+      tags:
+      - Transactions
+      summary: Get a single transaction for an account
+      responses:
+        '200':
+          description: Transaction
+    patch:
+      tags:
+      - Transactions
+      summary: Update note or category on a transaction
+      responses:
+        '200':
+          description: Updated transaction
+components:
+  parameters:
+    AccountId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Mercury account ID.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Mercury API token (read-only or read-and-write). Send as
+
+        "Authorization: Bearer {token}". Read-and-write tokens require
+
+        IP whitelisting.
+
+        '

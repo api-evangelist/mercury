@@ -1,0 +1,45 @@
+openapi: 3.1.0
+info:
+  title: Mercury Accounts Treasury API
+  description: 'Mercury is a banking platform for startups. The Mercury REST API exposes
+
+    accounts, transactions, statements, recipients, payments (ACH and wire),
+
+    cards, treasury, and webhooks. Read-and-write tokens for sending money
+
+    require IP whitelisting. Authenticate with a Bearer API token.
+
+    '
+  version: v1
+  contact:
+    name: Mercury
+    url: https://docs.mercury.com/
+servers:
+- url: https://api.mercury.com/api/v1
+  description: Mercury production API
+security:
+- bearerAuth: []
+tags:
+- name: Treasury
+paths:
+  /treasury:
+    get:
+      tags:
+      - Treasury
+      summary: Get treasury account details
+      responses:
+        '200':
+          description: Treasury account
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Mercury API token (read-only or read-and-write). Send as
+
+        "Authorization: Bearer {token}". Read-and-write tokens require
+
+        IP whitelisting.
+
+        '

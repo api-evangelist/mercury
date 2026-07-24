@@ -1,0 +1,63 @@
+openapi: 3.1.0
+info:
+  title: Mercury Accounts API
+  description: 'Mercury is a banking platform for startups. The Mercury REST API exposes
+
+    accounts, transactions, statements, recipients, payments (ACH and wire),
+
+    cards, treasury, and webhooks. Read-and-write tokens for sending money
+
+    require IP whitelisting. Authenticate with a Bearer API token.
+
+    '
+  version: v1
+  contact:
+    name: Mercury
+    url: https://docs.mercury.com/
+servers:
+- url: https://api.mercury.com/api/v1
+  description: Mercury production API
+security:
+- bearerAuth: []
+tags:
+- name: Accounts
+paths:
+  /accounts:
+    get:
+      tags:
+      - Accounts
+      summary: List accounts
+      responses:
+        '200':
+          description: Paginated accounts
+  /accounts/{id}:
+    parameters:
+    - $ref: '#/components/parameters/AccountId'
+    get:
+      tags:
+      - Accounts
+      summary: Get an account
+      responses:
+        '200':
+          description: Account details
+components:
+  parameters:
+    AccountId:
+      name: id
+      in: path
+      required: true
+      schema:
+        type: string
+      description: Mercury account ID.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: token
+      description: 'Mercury API token (read-only or read-and-write). Send as
+
+        "Authorization: Bearer {token}". Read-and-write tokens require
+
+        IP whitelisting.
+
+        '
