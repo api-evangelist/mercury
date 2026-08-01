@@ -1,0 +1,28 @@
+{
+  "provider": "mercury",
+  "sources": [
+    "mercury-accounts-api-openapi.yml",
+    "mercury-cards-api-openapi.yml",
+    "mercury-payments-api-openapi.yml",
+    "mercury-recipients-api-openapi.yml",
+    "mercury-statements-api-openapi.yml",
+    "mercury-transactions-api-openapi.yml",
+    "mercury-treasury-api-openapi.yml",
+    "mercury-webhooks-api-openapi.yml"
+  ],
+  "outputs": [
+    "mercury-accounts-api-openapi.yml",
+    "mercury-cards-api-openapi.yml",
+    "mercury-payments-api-openapi.yml",
+    "mercury-recipients-api-openapi.yml",
+    "mercury-statements-api-openapi.yml",
+    "mercury-transactions-api-openapi.yml",
+    "mercury-treasury-api-openapi.yml",
+    "mercury-webhooks-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
