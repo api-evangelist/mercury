@@ -231,6 +231,10 @@ apis:
   - type: OpenAPI
     url: openapi/mercury-webhooks-api-openapi.yml
 common:
+- type: ChangeLog
+  url: https://docs.mercury.com/changelog
+- type: GettingStarted
+  url: https://docs.mercury.com/docs/getting-started
 - type: AgenticAccess
   url: agentic-access/mercury-agentic-access.yml
 - type: DomainSecurity
