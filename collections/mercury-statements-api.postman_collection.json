@@ -1,0 +1,126 @@
+{
+  "item": [
+    {
+      "id": "1449eccf-3f6e-4437-98a8-ad943350bc8a",
+      "name": "Statements",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0f688e6f-5d71-4925-9d8a-ea8a3ed19b79",
+          "name": "List monthly statements for an account",
+          "request": {
+            "name": "List monthly statements for an account",
+            "description": {},
+            "url": {
+              "path": [
+                "accounts",
+                ":id",
+                "statements"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) Mercury account ID."
+                }
+              ]
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "03042d2b-faa1-4b04-a387-a25ad99cf27e",
+              "name": "Statements",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":id",
+                    "statements"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Mercury account ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.mercury.com/api/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "0a9af930-9b92-42d9-a9e8-3f88efa1d2ad",
+    "name": "Mercury Accounts Statements API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Mercury is a banking platform for startups. The Mercury REST API exposes\naccounts, transactions, statements, recipients, payments (ACH and wire),\ncards, treasury, and webhooks. Read-and-write tokens for sending money\nrequire IP whitelisting. Authenticate with a Bearer API token.\n\n\nContact Support:\n Name: Mercury",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mercury Accounts Payments API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payments",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Send money to a recipient (ACH or wire)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.mercury.com/api/v1/account/:id/recipients",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Mercury account ID."
+              }
+            ]
+          },
+          "docs": "Sends an outbound ACH or domestic wire payment from a Mercury account\nto a recipient. Requires read-and-write tokens from a whitelisted IP.\n"
+        },
+        {
+          "info": {
+            "name": "Cancel a pending payment",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.mercury.com/api/v1/account/:id/transactions/:transactionId",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Mercury account ID."
+              },
+              {
+                "name": "transactionId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Cancel a pending payment"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

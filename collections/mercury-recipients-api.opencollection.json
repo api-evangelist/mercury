@@ -1,0 +1,84 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mercury Accounts Recipients API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Recipients",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List recipients",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mercury.com/api/v1/recipients"
+          },
+          "docs": "List recipients"
+        },
+        {
+          "info": {
+            "name": "Create a recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.mercury.com/api/v1/recipients"
+          },
+          "docs": "Create a recipient"
+        },
+        {
+          "info": {
+            "name": "Get a recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mercury.com/api/v1/recipients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Recipient ID."
+              }
+            ]
+          },
+          "docs": "Get a recipient"
+        },
+        {
+          "info": {
+            "name": "Update a recipient",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.mercury.com/api/v1/recipients/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "Recipient ID."
+              }
+            ]
+          },
+          "docs": "Update a recipient"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

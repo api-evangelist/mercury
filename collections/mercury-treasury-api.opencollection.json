@@ -1,0 +1,35 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Mercury Accounts Treasury API",
+    "version": "v1"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Treasury",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get treasury account details",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.mercury.com/api/v1/treasury"
+          },
+          "docs": "Get treasury account details"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
