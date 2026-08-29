@@ -1,0 +1,43 @@
+slug: mercury
+provider: Mercury
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Payments
+  spec_file: mercury-payments-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.9
+  evidence: POST /account/{id}/recipients — 'Send money to a recipient (ACH or wire)'; DELETE ... 'Cancel
+    a pending payment'
+  reason: Operations initiate and cancel ACH/wire payments from a bank account — payment initiation within
+    Payments & Card Management.
+- tag: Recipients
+  spec_file: mercury-recipients-api-openapi.yml
+  capability_id: BC-1340.10
+  capability_id_l1: BC-1340
+  capability_name: Payment Initiation Management
+  confidence: 0.7
+  evidence: GET /recipients 'List recipients', POST /recipients 'Create a recipient'
+  reason: Recipients are payee records used to initiate ACH/wire payments on a banking platform; supports
+    payment initiation (payee management). Slight ambiguity vs generic party data, hence moderate confidence.
+- tag: Statements
+  spec_file: mercury-statements-api-openapi.yml
+  capability_id: BC-1330.50
+  capability_id_l1: BC-1330
+  capability_name: Deposit Pricing & Interest Management
+  confidence: 0.7
+  evidence: GET /accounts/{id}/statements 'List monthly statements for an account'
+  reason: Monthly account statements for deposit/checking accounts fall under deposit account interest/statement
+    handling; deposits domain is clear, sub-capability somewhat ambiguous.

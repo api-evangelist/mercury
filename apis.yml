@@ -260,6 +260,9 @@ apis:
   - type: OpenAPI
     url: openapi/mercury-webhooks-api-openapi.yml
 common:
+- type: CapabilityMap
+  url: capabilities/mercury-capability-edges.yml
+  name: Mercury Business Capability Map
 - type: ChangeLog
   url: https://docs.mercury.com/changelog
 - type: GettingStarted
