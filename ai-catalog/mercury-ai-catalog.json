@@ -1,0 +1,49 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Mercury",
+    "documentationUrl": "https://docs.mercury.com/docs/welcome"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:mercury.com:api:documentation",
+      "displayName": "Mercury API documentation",
+      "type": "text/html",
+      "url": "https://docs.mercury.com/docs/welcome",
+      "representativeQueries": [
+        "How do I use the Mercury API?",
+        "How can I automate a Mercury account?"
+      ]
+    },
+    {
+      "identifier": "urn:air:mercury.com:mcp:documentation",
+      "displayName": "Mercury MCP connection guide",
+      "type": "text/html",
+      "url": "https://docs.mercury.com/docs/connecting-mercury-mcp",
+      "representativeQueries": [
+        "Connect an AI agent to Mercury",
+        "How do I configure a client for Mercury MCP?"
+      ]
+    },
+    {
+      "identifier": "urn:air:mercury.com:oauth:authorization-server",
+      "displayName": "Mercury MCP OAuth metadata",
+      "type": "application/json",
+      "url": "https://mcp.mercury.com/.well-known/oauth-authorization-server",
+      "representativeQueries": [
+        "How does a client authenticate to Mercury MCP?",
+        "Where can an MCP client register with Mercury?"
+      ]
+    },
+    {
+      "identifier": "urn:air:mercury.com:skills:index",
+      "displayName": "Mercury Agent Skills",
+      "type": "text/html",
+      "url": "https://github.com/MercuryTechnologies/mercury-skills",
+      "representativeQueries": [
+        "Find agent skills for Mercury",
+        "How do I install Mercury agent skills?"
+      ]
+    }
+  ]
+}
