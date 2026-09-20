@@ -261,6 +261,8 @@ apis:
   - type: OpenAPI
     url: openapi/mercury-webhooks-api-openapi.yml
 common:
+- type: Pricing
+  url: https://mercury.com/pricing
 - type: CapabilityMap
   url: capabilities/mercury-capability-edges.yml
   name: Mercury Business Capability Map
