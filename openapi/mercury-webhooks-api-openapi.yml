@@ -1,15 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Mercury Accounts Webhooks API
+  title: Mercury Webhooks API
   description: 'Mercury is a banking platform for startups. The Mercury REST API exposes
 
     accounts, transactions, statements, recipients, payments (ACH and wire),
 
     cards, treasury, and webhooks. Read-and-write tokens for sending money
 
-    require IP whitelisting. Authenticate with a Bearer API token.
-
-    '
+    require IP whitelisting. Authenticate with a Bearer API token.'
   version: v1
   contact:
     name: Mercury
@@ -30,6 +28,8 @@ paths:
       responses:
         '200':
           description: Webhooks
+      operationId: getWebhooks
+      x-operation-id-source: derived
     post:
       tags:
       - Webhooks
@@ -37,6 +37,8 @@ paths:
       responses:
         '201':
           description: Created
+      operationId: postWebhooks
+      x-operation-id-source: derived
   /webhooks/{id}:
     parameters:
     - name: id
@@ -51,6 +53,8 @@ paths:
       responses:
         '200':
           description: Webhook
+      operationId: getWebhooksById
+      x-operation-id-source: derived
     patch:
       tags:
       - Webhooks
@@ -58,6 +62,8 @@ paths:
       responses:
         '200':
           description: Updated
+      operationId: patchWebhooksById
+      x-operation-id-source: derived
     delete:
       tags:
       - Webhooks
@@ -65,6 +71,8 @@ paths:
       responses:
         '204':
           description: Deleted
+      operationId: deleteWebhooksById
+      x-operation-id-source: derived
 components:
   securitySchemes:
     bearerAuth:

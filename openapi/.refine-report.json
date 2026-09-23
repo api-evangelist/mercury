@@ -1,14 +1,7 @@
 {
   "provider": "mercury",
   "sources": [
-    "mercury-accounts-api-openapi.yml",
-    "mercury-cards-api-openapi.yml",
-    "mercury-payments-api-openapi.yml",
-    "mercury-recipients-api-openapi.yml",
-    "mercury-statements-api-openapi.yml",
-    "mercury-transactions-api-openapi.yml",
-    "mercury-treasury-api-openapi.yml",
-    "mercury-webhooks-api-openapi.yml"
+    "_original/mercury-openapi.yml"
   ],
   "outputs": [
     "mercury-accounts-api-openapi.yml",
@@ -23,6 +16,19 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "mercury-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "mercury-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-cards-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-payments-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-recipients-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-statements-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-treasury-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "mercury-webhooks-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

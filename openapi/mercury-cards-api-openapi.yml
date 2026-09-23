@@ -1,15 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Mercury Accounts Cards API
+  title: Mercury Cards API
   description: 'Mercury is a banking platform for startups. The Mercury REST API exposes
 
     accounts, transactions, statements, recipients, payments (ACH and wire),
 
     cards, treasury, and webhooks. Read-and-write tokens for sending money
 
-    require IP whitelisting. Authenticate with a Bearer API token.
-
-    '
+    require IP whitelisting. Authenticate with a Bearer API token.'
   version: v1
   contact:
     name: Mercury
@@ -32,6 +30,8 @@ paths:
       responses:
         '200':
           description: Cards
+      operationId: getAccountsByIdCards
+      x-operation-id-source: derived
 components:
   parameters:
     AccountId:

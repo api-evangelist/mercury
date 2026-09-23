@@ -1,15 +1,13 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Mercury Accounts Payments API
+  title: Mercury Payments API
   description: 'Mercury is a banking platform for startups. The Mercury REST API exposes
 
     accounts, transactions, statements, recipients, payments (ACH and wire),
 
     cards, treasury, and webhooks. Read-and-write tokens for sending money
 
-    require IP whitelisting. Authenticate with a Bearer API token.
-
-    '
+    require IP whitelisting. Authenticate with a Bearer API token.'
   version: v1
   contact:
     name: Mercury
@@ -31,12 +29,12 @@ paths:
       summary: Send money to a recipient (ACH or wire)
       description: 'Sends an outbound ACH or domestic wire payment from a Mercury account
 
-        to a recipient. Requires read-and-write tokens from a whitelisted IP.
-
-        '
+        to a recipient. Requires read-and-write tokens from a whitelisted IP.'
       responses:
         '200':
           description: Payment requested
+      operationId: postAccountByIdRecipients
+      x-operation-id-source: derived
   /account/{id}/transactions/{transactionId}:
     parameters:
     - $ref: '#/components/parameters/AccountId'
@@ -52,6 +50,8 @@ paths:
       responses:
         '204':
           description: Cancelled
+      operationId: deleteAccountByIdTransactionsByTransactionId
+      x-operation-id-source: derived
 components:
   parameters:
     AccountId:
