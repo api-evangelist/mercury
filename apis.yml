@@ -62,8 +62,6 @@ apis:
   properties:
   - type: Documentation
     url: https://docs.mercury.com/reference/accounts
-  - url: graphql/mercury-graphql.md
-    type: GraphQL
 - aid: mercury:transactions
   name: Mercury Transactions API
   description: >-
