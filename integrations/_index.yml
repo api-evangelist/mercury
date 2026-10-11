@@ -11,6 +11,7 @@
   use_case: Create rows in Google Sheets for new transactions in Mercury
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/google-sheets/integrations/mercury/1220505/create-rows-in-google-sheets-for-new-transactions-in-mercury
   template: https://zapier.com/apps/google-sheets/integrations/mercury/1220505/create-rows-in-google-sheets-for-new-transactions-in-mercury
   source: template
@@ -24,6 +25,7 @@
   use_case: Create new Zoho Books customers from new Mercury transactions
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/zoho-books/255640879/create-new-zoho-books-customers-from-new-mercury-transactions
   template: https://zapier.com/apps/mercury/integrations/zoho-books/255640879/create-new-zoho-books-customers-from-new-mercury-transactions
   source: template
@@ -37,6 +39,7 @@
   use_case: Send new Mercury transactions to Slack as channel messages
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/slack/1250146/send-new-mercury-transactions-to-slack-as-channel-messages
   template: https://zapier.com/apps/mercury/integrations/slack/1250146/send-new-mercury-transactions-to-slack-as-channel-messages
   source: template
@@ -50,6 +53,7 @@
   use_case: Send private channel messages in Slack for new transactions in Mercury
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/slack/1221132/send-private-channel-messages-in-slack-for-new-transactions-in-mercury
   template: https://zapier.com/apps/mercury/integrations/slack/1221132/send-private-channel-messages-in-slack-for-new-transactions-in-mercury
   source: template
@@ -63,6 +67,7 @@
   use_case: Manage new Mercury balances by creating records in Airtable
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/airtable/integrations/mercury/1572175/manage-new-mercury-balances-by-creating-records-in-airtable
   template: https://zapier.com/apps/airtable/integrations/mercury/1572175/manage-new-mercury-balances-by-creating-records-in-airtable
   source: template
@@ -76,6 +81,7 @@
   use_case: Create Google Sheets rows for new settled transactions in Mercury
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/google-sheets/integrations/mercury/780294/create-google-sheets-rows-for-new-settled-transactions-in-mercury
   template: https://zapier.com/apps/google-sheets/integrations/mercury/780294/create-google-sheets-rows-for-new-settled-transactions-in-mercury
   source: template
@@ -89,6 +95,7 @@
   use_case: Create Airtable records for new settled transactions in Mercury
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/airtable/integrations/mercury/1241986/create-airtable-records-for-new-settled-transactions-in-mercury
   template: https://zapier.com/apps/airtable/integrations/mercury/1241986/create-airtable-records-for-new-settled-transactions-in-mercury
   source: template
@@ -102,6 +109,7 @@
   use_case: Add new Mercury transactions to Airtable as records
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/airtable/integrations/mercury/1256487/add-new-mercury-transactions-to-airtable-as-records
   template: https://zapier.com/apps/airtable/integrations/mercury/1256487/add-new-mercury-transactions-to-airtable-as-records
   source: template
@@ -115,6 +123,7 @@
   use_case: Send Discord channel messages for new settled transactions in Mercury
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/discord/integrations/mercury/1276989/send-discord-channel-messages-for-new-settled-transactions-in-mercury
   template: https://zapier.com/apps/discord/integrations/mercury/1276989/send-discord-channel-messages-for-new-settled-transactions-in-mercury
   source: template
@@ -127,6 +136,7 @@
   category: Email
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/gmail
   source: edge
   status: pending-partner-spec
@@ -138,6 +148,7 @@
   category: Accounting
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/wave
   source: edge
   status: pending-partner-spec
@@ -149,6 +160,7 @@
   category: Task Management
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/notion
   source: edge
   status: pending-generation
@@ -159,6 +171,7 @@
   category: Accounting
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/quickbooks
   source: edge
   status: pending-partner-spec
@@ -170,6 +183,7 @@
   category: Project Management
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/podio
   source: edge
   status: pending-generation
@@ -181,6 +195,7 @@
   category: Microsoft
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/excel
   source: edge
   status: pending-generation
@@ -192,6 +207,7 @@
   category: File Management & Storage
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/google-drive
   source: edge
   status: pending-generation
@@ -203,6 +219,7 @@
   category: Project Management
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/monday
   source: edge
   status: pending-generation
@@ -214,6 +231,7 @@
   category: Accounting
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/freshbooks
   source: edge
   status: pending-generation
@@ -225,6 +243,7 @@
   category: Marketing Automation
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/hubspot
   source: edge
   status: pending-generation
@@ -236,6 +255,7 @@
   category: Accounting
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/xero
   source: edge
   status: pending-generation
@@ -247,6 +267,7 @@
   category: Project Management
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/clickup
   source: edge
   status: pending-generation
@@ -258,6 +279,7 @@
   category: Phone & SMS
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/twilio
   source: edge
   status: pending-generation
@@ -269,6 +291,7 @@
   category: CRM (Customer Relationship Management)
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/zoho-crm
   source: edge
   status: pending-generation
@@ -280,6 +303,7 @@
   category: App Builder
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/glide-apps
   source: edge
   status: pending-generation
@@ -291,6 +315,7 @@
   category: Accounting
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/brex
   source: edge
   status: pending-generation
@@ -301,6 +326,7 @@
   category: Website & App Building
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/spreadsheetweb-hub
   source: edge
   status: pending-partner-spec
@@ -312,6 +338,7 @@
   category: Ads & Conversion
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/facebook-lead-ads
   source: edge
   status: pending-generation
@@ -323,6 +350,7 @@
   category: Forms & Surveys
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/google-forms
   source: edge
   status: pending-generation
@@ -334,6 +362,7 @@
   category: Marketing Automation
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/mailchimp
   source: edge
   status: pending-generation
@@ -345,6 +374,7 @@
   category: Payment Processing
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/stripe
   source: edge
   status: pending-generation
@@ -355,6 +385,7 @@
   category: AI Assistants
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/chatgpt
   source: edge
   status: pending-partner-spec
@@ -365,6 +396,7 @@
   category: Ads & Conversion
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/facebook-conversions
   source: edge
   status: pending-partner-spec
@@ -376,6 +408,7 @@
   category: Website Builders
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/wix
   source: edge
   status: pending-generation
@@ -386,6 +419,7 @@
   category: Communication
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/whatsapp-notifications
   source: edge
   status: pending-partner-spec

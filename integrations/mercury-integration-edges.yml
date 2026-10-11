@@ -3,10 +3,14 @@ method: searched
 source:
 - https://zapier.com/apps/mercury/integrations
 checked:
+- https://composio.dev/toolkits/mercury
+- https://monid.ai/tools/mercury
+- https://n8n.io/integrations/mercury/
 - https://zapier.com/apps/mercury/integrations
 summary: null
 marketplace_apps:
 - marketplace: zapier
+  channel: ipaas-listing
   app: mercury
   url: https://zapier.com/apps/mercury/integrations
   external_url: https://mercury.com/
@@ -33,6 +37,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/slack
   direction: third-party
   category: Team Chat
@@ -43,6 +48,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/google-sheets
   direction: third-party
   category: Google
@@ -53,6 +59,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/airtable
   direction: third-party
   category: Databases
@@ -63,6 +70,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/discord
   direction: third-party
   category: Team Chat
@@ -73,6 +81,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/gmail
   direction: third-party
   category: Email
@@ -83,6 +92,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/zoho-books
   direction: third-party
   category: Accounting
@@ -93,6 +103,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/wave
   direction: third-party
   category: Accounting
@@ -103,6 +114,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/notion
   direction: third-party
   category: Task Management
@@ -113,6 +125,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/quickbooks
   direction: third-party
   category: Accounting
@@ -123,6 +136,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/podio
   direction: third-party
   category: Project Management
@@ -133,6 +147,7 @@ edges:
   partner_candidate: zapier
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/excel
   direction: third-party
   category: Microsoft
@@ -143,6 +158,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/google-drive
   direction: third-party
   category: File Management & Storage
@@ -153,6 +169,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/monday
   direction: third-party
   category: Project Management
@@ -163,6 +180,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/freshbooks
   direction: third-party
   category: Accounting
@@ -173,6 +191,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/hubspot
   direction: third-party
   category: Marketing Automation
@@ -183,6 +202,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/xero
   direction: third-party
   category: Accounting
@@ -193,6 +213,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/clickup
   direction: third-party
   category: Project Management
@@ -203,6 +224,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/twilio
   direction: third-party
   category: Phone & SMS
@@ -213,6 +235,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/zoho-crm
   direction: third-party
   category: CRM (Customer Relationship Management)
@@ -223,6 +246,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/glide-apps
   direction: third-party
   category: App Builder
@@ -233,6 +257,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/brex
   direction: third-party
   category: Accounting
@@ -243,6 +268,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/spreadsheetweb-hub
   direction: third-party
   category: Website & App Building
@@ -253,6 +279,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/facebook-lead-ads
   direction: third-party
   category: Ads & Conversion
@@ -263,6 +290,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/google-forms
   direction: third-party
   category: Forms & Surveys
@@ -273,6 +301,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/mailchimp
   direction: third-party
   category: Marketing Automation
@@ -283,6 +312,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/stripe
   direction: third-party
   category: Payment Processing
@@ -293,6 +323,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/chatgpt
   direction: third-party
   category: AI Assistants
@@ -303,6 +334,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/facebook-conversions
   direction: third-party
   category: Ads & Conversion
@@ -313,6 +345,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/wix
   direction: third-party
   category: Website Builders
@@ -323,6 +356,7 @@ edges:
   partner_candidate: null
   type: marketplace
   marketplace: zapier
+  channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/whatsapp-notifications
   direction: third-party
   category: Communication
