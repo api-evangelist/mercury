@@ -190,7 +190,6 @@
   arazzo: null
 - slug: mercury-microsoft-excel
   label: Microsoft Excel
-  partner: microsoft-excel
   partner_name: Microsoft Excel
   category: Microsoft
   type: marketplace
@@ -198,7 +197,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/excel
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: mercury-google-drive
   label: Google Drive
@@ -214,7 +213,6 @@
   arazzo: null
 - slug: mercury-monday-com
   label: monday.com
-  partner: monday-com
   partner_name: monday.com
   category: Project Management
   type: marketplace
@@ -222,7 +220,7 @@
   channel: ipaas-usage
   evidence: https://zapier.com/apps/mercury/integrations/monday
   source: edge
-  status: pending-generation
+  status: pending-partner-spec
   arazzo: null
 - slug: mercury-freshbooks
   label: FreshBooks
@@ -423,4 +421,17 @@
   evidence: https://zapier.com/apps/mercury/integrations/whatsapp-notifications
   source: edge
   status: pending-partner-spec
+  arazzo: null
+- slug: mercury-stripe-own
+  label: Stripe (own)
+  partner: stripe
+  partner_name: Stripe (own)
+  category: banking_services
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.stripe.com/apps/mercury
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
   arazzo: null
