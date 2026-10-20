@@ -576,3 +576,56 @@
   relationship: ipaas-bridge
   status: pending-partner-spec
   arazzo: null
+- slug: mercury-homebrew
+  label: Homebrew
+  partner: homebrew
+  partner_name: Homebrew
+  category: official CLI (Homebrew)
+  type: register
+  channel: package-registry
+  evidence: https://formulae.brew.sh/formula/mercury-cli
+  source: edge
+  relationship: distribution-channel
+  contract_reference:
+    register: Homebrew (public package index)
+    spec_file: null
+    packages:
+    - name: mercury-cli
+      kind: formula
+      version: 0.11.8
+      released: null
+      lapsed: false
+      page: https://formulae.brew.sh/formula/mercury-cli
+      cli: 'formula desc: CLI interface for Mercury banking'
+      repo_leg: github-org:mercurytechnologies
+      publisher_leg: artifact-github-org:mercurytechnologies
+      matched_by: github-org
+    current: true
+    signal_note: 'the provider''s own command-line tool on a package manager: distribution, not an integration;
+      lapsed = no release in 24 months or deprecated / disabled by the manager'
+    detected_by: sweep-official-clis.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
+- slug: mercury-claude-plugins-dev
+  label: claude-plugins.dev
+  partner_name: claude-plugins.dev
+  category: Agent Skills register
+  type: register
+  channel: standard-directory
+  evidence: https://claude-plugins.dev/skills/@mercurytechnologies/claude
+  source: edge
+  relationship: compatible
+  contract_reference:
+    register: claude-plugins.dev (public sitemap / list)
+    spec_file: null
+    standard: Agent Skills (agentskills.io)
+    role: agent-skills-listing
+    matched_org: mercurytechnologies
+    matched_by: org-profile-domain:mercury.com
+    sample_skills:
+    - hackage-upload
+    detected_by: sweep-agent-skills.py
+    detected: '2026-10-20'
+  status: not-a-workflow
+  arazzo: null
